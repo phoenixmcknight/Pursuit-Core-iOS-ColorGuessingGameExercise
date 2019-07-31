@@ -1,12 +1,5 @@
-//
-//  RGB-Value.swift
-//  colorGuesingGame
-//
-//  Created by Mr Wonderful on 7/30/19.
-//  Copyright © 2019 Mr Wonderful. All rights reserved.
-//
 
-import Foundation
+
 import UIKit
 
 struct RGBValue {
@@ -26,8 +19,4 @@ struct RGBValue {
         return CGFloat(colors[0])
     }
 }
-
-var currentHighestRBGValue = RGBValue()
- var high = currentHighestRBGValue.highestRGBvalue()
-
 

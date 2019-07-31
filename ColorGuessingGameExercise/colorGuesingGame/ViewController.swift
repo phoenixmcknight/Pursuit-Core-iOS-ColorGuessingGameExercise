@@ -1,14 +1,9 @@
-//
-//  ViewController.swift
-//  colorGuesingGame
-//
-//  Created by Mr Wonderful on 7/30/19.
-//  Copyright © 2019 Mr Wonderful. All rights reserved.
-//
 
 import UIKit
 
 class ViewController: UIViewController {
+    let model: ColorModeling = ColorModel()
+    
     @IBOutlet weak var redOutlet: UIButton!
     @IBOutlet weak var blueOutlet: UIButton!
     
@@ -22,40 +17,11 @@ class ViewController: UIViewController {
     var emojiStruct = Emojis()
     var colorGenerated = RGBValue()
     var increment = incrementer()
+    var colorModel = ColorModel()
     @IBOutlet weak var RGBColorView: UIView!
     
-    func isDisabled(){
-        redOutlet.isEnabled = false
-        blueOutlet.isEnabled = false
-        greenOutlet.isEnabled = false
-        
-        redOutlet.alpha = 0.5
-        blueOutlet.alpha = 0.5
-        greenOutlet.alpha = 0.5
-        
-        gameOver.alpha = 1.0
-        newGame.alpha = 1.0
-        
-        redOutlet.setTitleColor(UIColor.lightGray, for: UIControl.State.normal)
-        blueOutlet.setTitleColor(UIColor.lightGray, for: UIControl.State.normal)
-        greenOutlet.setTitleColor(UIColor.lightGray, for: UIControl.State.normal)
-    }
+    var buttonArray: [UIButton]?
     
-    func isEnabled(){
-        redOutlet.isEnabled = true
-        blueOutlet.isEnabled = true
-        greenOutlet.isEnabled = true
-        
-        redOutlet.alpha = 1
-        blueOutlet.alpha = 1
-        greenOutlet.alpha = 1
-        
-        gameOver.alpha = 0
-        newGame.alpha = 0
-        redOutlet.setTitleColor(UIColor.red, for: UIControl.State.normal)
-        blueOutlet.setTitleColor(UIColor.blue, for: UIControl.State.normal)
-        greenOutlet.setTitleColor(UIColor.green, for: UIControl.State.normal)
-    }
     
     func colorGenerator(){
         colorGenerated = RGBValue()
@@ -79,6 +45,8 @@ class ViewController: UIViewController {
         currentScore.text = "Curent Score: \(increment.score)"
         emojiStruct = Emojis()
         emojiLabel.text = emojiStruct.sad()
+        gameOver.alpha = 1.0
+        newGame.alpha = 1.0
     }
     
     @IBAction func red(_ sender: UIButton) {
@@ -87,7 +55,8 @@ class ViewController: UIViewController {
             ifCaseIsTrue()
         default:
             ifCaseIsFalse()
-            isDisabled()
+            colorModel.disableButtons(buttons: buttonArray!)
+            
         }
     }
     
@@ -97,7 +66,9 @@ class ViewController: UIViewController {
             ifCaseIsTrue()
         default:
            ifCaseIsFalse()
-            isDisabled()
+            colorModel.disableButtons(buttons: buttonArray!)
+            
+            
         }
     }
     
@@ -107,21 +78,27 @@ class ViewController: UIViewController {
            ifCaseIsTrue()
         default:
            ifCaseIsFalse()
-            isDisabled()
+            colorModel.disableButtons(buttons: buttonArray!)
         }
     }
     
     @IBAction func newGame(_ sender: UIButton) {
-        isEnabled()
         colorGenerator()
          emojiLabel.alpha = 0
+        gameOver.alpha = 0
+        newGame.alpha = 0
+        colorModel.enableButtons(buttons: buttonArray!)
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         RGBColorView.backgroundColor = colorGenerated.creatRGBColor()
-        
-        // Do any additional setup after loading the view.
+        configureButtonArray()
+    }
+    
+    func configureButtonArray() {
+        buttonArray = [redOutlet, blueOutlet, greenOutlet]
     }
 }
 
